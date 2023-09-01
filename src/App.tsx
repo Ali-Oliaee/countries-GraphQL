@@ -1,6 +1,7 @@
 import { gql, useQuery } from "@apollo/client";
 import { client } from "./adaptor/client";
 import CountryList from "./components/country-list";
+import Spinner from "./components/spinner";
 
 function App() {
   const LIST_COUNTRIES = gql`
@@ -20,11 +21,11 @@ function App() {
   }
   `;
 
-  const {data} = useQuery(LIST_COUNTRIES, {client});
+  const {data, loading} = useQuery(LIST_COUNTRIES, {client});
+  console.log(loading);
+  
 
-  return (
-   <CountryList {...data}/>
-  )
+  return loading ? <Spinner/> : <CountryList {...data}/>
 }
 
 export default App
